@@ -44,6 +44,27 @@ section.hero {
   background: var(--third);
 }
 
+.add-to-cart {
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  transition: var(--smooth);
+}
+
+.add-to-cart:hover {
+  border-color: var(--secondary);
+  background: var(--primary);
+  color: var(--pure);
+}
+
+.btn-primary {
+  background: var(--primary);
+  transition: var(--smooth);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
