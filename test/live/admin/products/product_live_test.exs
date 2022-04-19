@@ -30,7 +30,5 @@ defmodule FoodOrderWeb.Admin.ProductLiveTest do
              "[data-role=product-actions][data-id=#{product.id}]",
              "Show | Edit | Delete"
            )
-
-    IO.inspect(product, label: "PRODUCT: ")
   end
 end
