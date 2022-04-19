@@ -61,7 +61,7 @@ defmodule FoodOrder.MixProject do
       {:sobelow, "~> 0.8", only: :dev},
       {:dialyxir, "~> 0.5.0", only: [:dev, :test], runtime: false},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:ex_machina, "~> 2.7.0", only: [:test, :dev], runtime: false},
+      {:ex_machina, "~> 2.7.0"},
       {:faker, "~> 0.17", only: [:dev, :test]}
     ]
   end
