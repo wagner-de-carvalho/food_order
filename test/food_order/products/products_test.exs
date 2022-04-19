@@ -1,0 +1,36 @@
+defmodule FoodOrder.ProductsTest do
+  use FoodOrder.DataCase, async: true
+  alias Ecto.Changeset
+  alias FoodOrder.Products
+  alias FoodOrder.Products.Product
+
+  describe "list_products/0" do
+    test "When function is called, returns a list" do
+      products = Products.list_products()
+      assert products == []
+      assert Enum.count(products) >= 0
+    end
+  end
+
+  describe "create_product/1" do
+    test "When all params arecorrect, creates a new product" do
+      payload = %{
+        name: "Computador",
+        price: 2890,
+        size: "medium",
+        description: "Computador Lenovo"
+      }
+
+      assert {:ok, %Product{} = product} = Products.create_product(payload)
+      assert product.description == payload.description
+      assert product.name == payload.name
+      assert product.price == payload.price
+      assert product.size == payload.size
+    end
+
+    test "When any params is incorrect or missing, returns an error" do
+      payload = %{name: "Computador", price: 2890, description: "Computador Lenovo"}
+      assert {:error, %Changeset{} = changeset} = Products.create_product(payload)
+    end
+  end
+end
