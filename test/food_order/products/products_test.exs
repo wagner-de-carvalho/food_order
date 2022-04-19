@@ -30,7 +30,20 @@ defmodule FoodOrder.ProductsTest do
 
     test "When any params is incorrect or missing, returns an error" do
       payload = %{name: "Computador", price: 2890, description: "Computador Lenovo"}
+      assert {:error, %Changeset{}} = Products.create_product(payload)
+    end
+
+    test "When there is a product withe the same name, returns an error" do
+      payload = %{
+        name: "Computador",
+        price: 2890,
+        size: "medium",
+        description: "Computador Lenovo"
+      }
+
+      assert {:ok, %Product{}} = Products.create_product(payload)
       assert {:error, %Changeset{} = changeset} = Products.create_product(payload)
+      assert "has already been taken" in errors_on(changeset).name
     end
   end
 end

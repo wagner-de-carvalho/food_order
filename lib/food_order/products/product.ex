@@ -3,7 +3,7 @@ defmodule FoodOrder.Products.Product do
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key :binary_id
+  # @foreign_key :binary_id
 
   @fields ~w/description/a
   @required_fields ~w/name price size/a
