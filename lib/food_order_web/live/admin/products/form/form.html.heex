@@ -1,0 +1,32 @@
+<div>
+    <.form let={f} for={@changeset} class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id={@id}>
+        <div class="mb-4">
+            <%= label f, :name, class: "block text-gray-700 text-sm font-bold mb-2" %>
+            <%= text_input f, :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", placeholder: "Nome" %>
+            <%= error_tag f, :name %>
+        </div>
+
+        <div class="mb-4">
+            <%= label f, :description, class: "block text-gray-700 text-sm font-bold mb-2" %>
+            <%= textarea f, :description, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", placeholder: "Descrição" %>
+            <%= error_tag f, :description %>
+        </div>
+
+        <div class="mb-4">
+            <%= label f, :price, class: "block text-gray-700 text-sm font-bold mb-2" %>
+            <%= text_input f, :price, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", placeholder: "Preço" %>
+            <%= error_tag f, :price %>
+        </div>
+
+        <div class="mb-4">
+            <%= label f, :size, class: "block text-gray-700 text-sm font-bold mb-2" %>
+            <%= text_input f, :size, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", placeholder: "Tamanho" %>
+            <%= error_tag f, :size %>
+        </div>
+
+        <div class="flex items-center">
+            <%= submit "Criar produto", phx_disable_with: "Criando ...", class: "btn-primary rounded-full text-small text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+        </div>
+
+    </.form>
+</div>
