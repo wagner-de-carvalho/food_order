@@ -24,7 +24,8 @@ defmodule FoodOrder.ProductsTest do
       assert {:ok, %Product{} = product} = Products.create_product(payload)
       assert product.description == payload.description
       assert product.name == payload.name
-      assert product.price == payload.price
+      # assert product.price == payload.price
+      assert product.price == %Money{amount: 2890, currency: :BRL}
       assert product.size == payload.size
     end
 
