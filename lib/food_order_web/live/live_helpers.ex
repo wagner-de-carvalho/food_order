@@ -7,19 +7,22 @@ defmodule FoodOrderWeb.LiveHelpers do
     assigns = assign_new(assigns, :return_to, fn -> nil end)
 
     ~H"""
-    <div id="modal" class="phx-modal fade-in bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" data-role="modal" phx-remove={hide_modal()}>
+    <div id="modal" class="phx-modal fade-in bh-white shadow-md rounded px-8 pt-6 pb-8 mb-4" data-role="modal" phx-remove={hide_modal()}>
     <div
       id="modal-content"
       class="phx-modal-content fade-in-scale"
       phx-click-away={JS.dispatch("click", to: "#close")}
-      phx-window-keydow={JS.dispatch("click", to: "#close")}
+      phx-window-keydownn={JS.dispatch("click", to: "#close")}
       phx-key="escape"
     >
+
     <%= if @return_to do %>
+    <%= IO.inspect @return_to, label: "RETURN TO: " %>
       <%= live_patch "x", to: @return_to, id: "close", class: "phx-modal-close", phx_click: hide_modal() %>
     <% else %>
       <a id="close" href="#" class="phx-modal-close" phx-click={hide_modal()}><small>x</small></a>
     <% end %>
+
     <%= render_slot(@inner_block) %>
     </div>
     </div>
