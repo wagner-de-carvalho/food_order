@@ -8,7 +8,10 @@
                         <th class="px-4 py-3" data-id="head-name">Name</th>
                         <th class="px-4 py-3" data-id="head-price">Price</th>
                         <th class="px-4 py-3" data-id="head-size">Size</th>
-                        <th class="px-4 py-3" data-id="head-actions">Actions</th>
+                        <th class="px-4 py-3" data-id="head-actions">
+                            Actions
+                            <%= live_patch "New", to: Routes.admin_product_path(@socket, :new), "data-role": "add-new-product",  class: "px-3 py-1 rounded-full text-white font-bold btn-primary" %>
+                        </th>
                     </tr>
                 </thead>
 
@@ -25,7 +28,9 @@
                                 <%= product.size %>
                             </td>
                             <td class="px-4 py-3 border" data-role="product-actions" data-id={product.id}>
-                                Show | Edit | Delete
+                                Show | 
+                                <%= live_patch "Edit", to: Routes.admin_product_path(@socket, :edit, product), "data-role": "edit-product",  class: "px-3 py-1 rounded-full text-white font-bold btn-primary" %>
+                                Delete
                             </td>
                         </tr>
                         <% end %>
@@ -35,6 +40,14 @@
     </div>
 </section>
 
-<.modal return_to={}>
-    <.live_component module={Form} id="new-product" />
+<%= if @live_action in [:new, :edit] do %>
+<.modal return_to={Routes.admin_product_path(@socket, :index)}>
+    <.live_component 
+        module={Form} 
+        id={@product.id || :new} 
+        action={@live_action} 
+        product={@product} 
+        return_to={Routes.admin_product_path(@socket, :index)}
+    />
 </.modal>
+<% end %>

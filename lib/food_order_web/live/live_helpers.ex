@@ -17,7 +17,6 @@ defmodule FoodOrderWeb.LiveHelpers do
     >
 
     <%= if @return_to do %>
-    <%= IO.inspect @return_to, label: "RETURN TO: " %>
       <%= live_patch "x", to: @return_to, id: "close", class: "phx-modal-close", phx_click: hide_modal() %>
     <% else %>
       <a id="close" href="#" class="phx-modal-close" phx-click={hide_modal()}><small>x</small></a>
