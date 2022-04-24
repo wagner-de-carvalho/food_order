@@ -1,7 +1,6 @@
 defmodule FoodOrderWeb.Admin.Products.Form do
   use FoodOrderWeb, :live_component
   alias FoodOrder.Products
-  alias FoodOrder.Products.Product
 
   def update(%{product: product} = assigns, socket) do
     changeset = Products.change_product(product)
