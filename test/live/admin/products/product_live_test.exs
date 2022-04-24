@@ -29,10 +29,6 @@ defmodule FoodOrderWeb.Admin.ProductLiveTest do
 
     assert has_element?(view, "[data-role=product-size][data-id=#{product.id}]", product.size)
 
-    assert has_element?(
-             view,
-             "[data-role=product-actions][data-id=#{product.id}]",
-             "Show | Edit | Delete"
-           )
+    assert has_element?(view, "[data-role=product-actions][data-id=#{product.id}]")
   end
 end

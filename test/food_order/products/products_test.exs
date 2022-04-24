@@ -12,6 +12,20 @@ defmodule FoodOrder.ProductsTest do
     end
   end
 
+  describe "get/1" do
+    test "When an id is given, returns a product" do
+      payload = %{
+        name: "Computador",
+        price: 2890,
+        size: "medium",
+        description: "Computador Lenovo"
+      }
+
+      {:ok, product} = Products.create_product(payload)
+      assert Products.get!(product.id).name == product.name
+    end
+  end
+
   describe "create_product/1" do
     test "When all params arecorrect, creates a new product" do
       payload = %{
@@ -45,6 +59,21 @@ defmodule FoodOrder.ProductsTest do
       assert {:ok, %Product{}} = Products.create_product(payload)
       assert {:error, %Changeset{} = changeset} = Products.create_product(payload)
       assert "has already been taken" in errors_on(changeset).name
+    end
+  end
+
+  describe "update_product/2" do
+    test "When params are correct, updates product" do
+      payload = %{
+        name: "Computador",
+        price: 2890,
+        size: "medium",
+        description: "Computador Lenovo"
+      }
+
+      assert {:ok, product} = Products.create_product(payload)
+      assert {:ok, %Product{} = product} = Products.update_product(product, %{name: "Notebook"})
+      assert product.name == "Notebook"
     end
   end
 end

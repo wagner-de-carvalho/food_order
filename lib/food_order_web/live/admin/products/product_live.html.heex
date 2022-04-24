@@ -10,7 +10,7 @@
                         <th class="px-4 py-3" data-id="head-size">Size</th>
                         <th class="px-4 py-3" data-id="head-actions">
                             Actions
-                            <%= live_patch "New", to: Routes.admin_product_path(@socket, :new), "data-role": "add-new-product",  class: "px-3 py-1 rounded-full text-white font-bold btn-primary" %>
+                            <%= live_patch "New", to: Routes.admin_product_path(@socket, :new), "data-role": "add-new-product", "data-id": "add-new-product",  class: "px-3 py-1 rounded-full text-white font-bold btn-primary" %>
                         </th>
                     </tr>
                 </thead>
@@ -29,7 +29,7 @@
                             </td>
                             <td class="px-4 py-3 border" data-role="product-actions" data-id={product.id}>
                                 Show | 
-                                <%= live_patch "Edit", to: Routes.admin_product_path(@socket, :edit, product), "data-role": "edit-product",  class: "px-3 py-1 rounded-full text-white font-bold btn-primary" %>
+                                <%= live_patch "Edit", to: Routes.admin_product_path(@socket, :edit, product), "data-role": "edit-product", "data-id": product.id, class: "px-3 py-1 rounded-full text-white font-bold btn-primary" %>
                                 Delete
                             </td>
                         </tr>
