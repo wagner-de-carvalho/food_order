@@ -26,6 +26,21 @@ defmodule FoodOrder.ProductsTest do
     end
   end
 
+  describe "delete/1" do
+    test "When an id is given, deletes a product" do
+      payload = %{
+        name: "Computador",
+        price: 2890,
+        size: "medium",
+        description: "Computador Lenovo"
+      }
+
+      {:ok, product} = Products.create_product(payload)
+      assert {:ok, _} = Products.delete(product.id)
+      assert_raise Ecto.NoResultsError, fn -> Products.get!(product.id) end
+    end
+  end
+
   describe "create_product/1" do
     test "When all params arecorrect, creates a new product" do
       payload = %{

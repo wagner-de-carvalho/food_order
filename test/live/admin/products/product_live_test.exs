@@ -17,11 +17,6 @@ defmodule FoodOrderWeb.Admin.ProductLiveTest do
     assert has_element?(view, "[data-role=product-item][data-id=#{product.id}]")
     assert has_element?(view, "[data-role=product-name][data-id=#{product.id}]", product.name)
 
-    # assert element(
-    #          view,
-    #          "[data-role=product-price][data-id=#{product.id}]"
-    #        ) |> render =~ "R$#{product.price.amount}"
-
     assert has_element?(
              view,
              "[data-role=product-price][data-id=#{product.id}]"
@@ -30,5 +25,18 @@ defmodule FoodOrderWeb.Admin.ProductLiveTest do
     assert has_element?(view, "[data-role=product-size][data-id=#{product.id}]", product.size)
 
     assert has_element?(view, "[data-role=product-actions][data-id=#{product.id}]")
+  end
+
+  test "given an existing product, when delete is clicked, removes it from db and updates page",
+       %{conn: conn} do
+    product = insert(:product)
+    {:ok, view, _html} = live(conn, Routes.admin_product_path(conn, :index))
+    assert has_element?(view, "[data-role=delete][data-id=#{product.id}]", "Delete")
+
+    assert view
+           |> element("[data-role=delete][data-id=#{product.id}]", "Delete")
+           |> render_click()
+
+    refute has_element?(view, "[data-role=delete][data-id=#{product.id}]")
   end
 end
