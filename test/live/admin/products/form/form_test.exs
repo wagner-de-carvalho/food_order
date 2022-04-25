@@ -4,6 +4,20 @@ defmodule FoodOrderWeb.Admin.Products.FormTest do
   alias FoodOrder.Products
   import FoodOrder.Factory
 
+  test "given an existing product, when try to update without information returns an error ", %{
+    conn: conn
+  } do
+    product = insert(:product)
+    {:ok, view, _html} = live(conn, Routes.admin_product_path(conn, :index))
+
+    assert view |> element("[data-role=edit-product][data-id=#{product.id}]") |> render_click()
+    assert_patch(view, Routes.admin_product_path(conn, :edit, product))
+
+    assert view
+           |> form("##{product.id}", product: %{name: nil})
+           |> render_submit() =~ "can&#39;t be blank"
+  end
+
   test "load modal to insert product", %{conn: conn} do
     {:ok, view, _html} = live(conn, Routes.admin_product_path(conn, :index))
 
@@ -16,20 +30,6 @@ defmodule FoodOrderWeb.Admin.Products.FormTest do
            |> form("#new", product: %{name: nil})
            |> render_change() =~ "can&#39;t be blank"
   end
-
-  # test "when click to open modal and then close", %{conn: conn} do
-  #   {:ok, view, _html} = live(conn, Routes.admin_product_path(conn, :index))
-
-  #   open_modal(view)
-
-  #   assert view |> has_element?("#modal")
-
-  #   assert view
-  #   |> element("#close", "x")
-  #   |> render_click()
-
-  #   refute view |> has_element?("#modal")
-  # end
 
   test "When form is submitted, returns product created message", %{conn: conn} do
     {:ok, view, _html} = live(conn, Routes.admin_product_path(conn, :index))

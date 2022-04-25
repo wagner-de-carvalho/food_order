@@ -5,6 +5,12 @@ defmodule FoodOrder.Products do
 
   def get!(id), do: Repo.get!(Product, id)
 
+  def delete(id) do
+    id
+    |> get!()
+    |> Repo.delete()
+  end
+
   def create_product(attrs \\ %{}) do
     attrs
     |> Product.changeset()
