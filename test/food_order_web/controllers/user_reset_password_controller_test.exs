@@ -101,7 +101,8 @@ defmodule FoodOrderWeb.UserResetPasswordControllerTest do
       response = html_response(conn, 200)
       assert response =~ "<h1>Reset password</h1>"
       assert response =~ "should be at least 12 character(s)"
-      assert response =~ "does not match password"
+      # assert response =~ "does not match password"
+      assert response =~ "at least one digit or punctuation character"
     end
 
     test "does not reset password with invalid token", %{conn: conn} do
