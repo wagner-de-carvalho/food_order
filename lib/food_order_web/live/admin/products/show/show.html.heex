@@ -1,4 +1,4 @@
-<ul class="bg-gray-100 rounded w-150 justify-center items-center divide-y divide-gray-700 divide-opacity-25 text-gray-800">
+<ul class="bg-gray-100 rounded justify-center items-center divide-y divide-gray-700 divide-opacity-25 text-gray-800">
     <li class="px-4 py-2" data-role="name">
         <strong>Name: </strong> <%= @product.name %> 
     </li>
@@ -13,4 +13,4 @@
     </li>
 </ul>
 
-<%= link "back", to: Routes.admin_product_path(@socket, :index) %>
+<%= link "back", to: Routes.admin_product_path(@socket, :index), class: "text-sm text-blue " %>
