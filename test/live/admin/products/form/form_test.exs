@@ -5,7 +5,7 @@ defmodule FoodOrderWeb.Admin.Products.FormTest do
   import FoodOrder.Factory
 
   describe "test product form" do
-    setup :register_and_log_in_user
+    setup :register_and_log_in_admin
 
     test "given an existing product, when try to update without information returns an error ", %{
       conn: conn
