@@ -13,7 +13,6 @@ defmodule LiveSessions.Permissions do
 
   defp assign_user(socket, :admin, user_token) do
     current_user = Accounts.get_user_by_session_token(user_token)
-    IO.inspect(current_user, label: "CURRENT USER: >>>")
     if current_user.role != :ADMIN do
       error_login(socket, "You don't have permission to access this page")
     else
