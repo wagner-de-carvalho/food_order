@@ -3,23 +3,27 @@ defmodule LiveSessions.Permissions do
   alias FoodOrder.Accounts
   alias FoodOrderWeb.Router.Helpers, as: Routes
 
+  @deny_login_access "You don't have permission to access this page"
+  @info_login_access "You must be logged in"
   def on_mount(:admin, _params, %{"user_token" => user_token}, socket) do
     assign_user(socket, :admin, user_token)
   end
 
   defp assign_user(socket, _, nil) do
-    error_login(socket, "You must be logged in")
+    error_login(socket, @info_login_access)
   end
 
   defp assign_user(socket, :admin, user_token) do
-    current_user = Accounts.get_user_by_session_token(user_token)
-
-    if current_user.role != :ADMIN do
-      error_login(socket, "You don't have permission to access this page")
-    else
-      {:cont, assign_new(socket, :current_user, fn -> current_user end)}
-    end
+    user_token
+    |> Accounts.get_user_by_session_token()
+    |> return_socket(socket)
   end
+
+  defp return_socket(%{role: role}, socket) when role != :ADMIN,
+    do: error_login(socket, @deny_login_access)
+
+  defp return_socket(current_user, socket),
+    do: {:cont, assign_new(socket, :current_user, fn -> current_user end)}
 
   defp error_login(socket, message) do
     socket =
