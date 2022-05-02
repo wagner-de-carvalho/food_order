@@ -9,15 +9,16 @@ Accounts.register_user(user_admin)
 
 # waffle
 # {:ok, product} =
-  product = %{
-  name: Faker.Food.dish(),
-  description: Faker.Food.description(),
-  price: :random.uniform(10_000),
-  size: "small",
-  product_url: %Plug.Upload{
-    content_type: "image/png",
-    filename: "logo.png",
-    path: "priv/static/images/logo.png"
+product =
+  %{
+    name: Faker.Food.dish(),
+    description: Faker.Food.description(),
+    price: :random.uniform(10_000),
+    size: "small",
+    product_url: %Plug.Upload{
+      content_type: "image/png",
+      filename: "logo.png",
+      path: "priv/static/images/logo.png"
+    }
   }
-}
-|> Products.create_product()
+  |> Products.create_product()
