@@ -10,7 +10,6 @@ defmodule FoodOrderWeb.Admin.Products.FormTest do
     test "given an existing product, when try to update without information returns an error ", %{
       conn: conn
     } do
-
       product = insert(:product)
       {:ok, view, _html} = live(conn, Routes.admin_product_path(conn, :index))
 
@@ -38,17 +37,24 @@ defmodule FoodOrderWeb.Admin.Products.FormTest do
     test "should cancel image upload ", %{conn: conn} do
       {:ok, view, _html} = live(conn, Routes.admin_product_path(conn, :new))
 
-      upload = file_input(view, "#new", :photo, [
-        %{
-          last_modiefied: 1_594_171_879_000,
-          name: "myfile.jpeg",
-          content: "       ",
-          type: "image/jpeg"
-        }
-      ])
+      upload =
+        file_input(view, "#new", :photo, [
+          %{
+            last_modiefied: 1_594_171_879_000,
+            name: "myfile.jpeg",
+            content: "       ",
+            type: "image/jpeg"
+          }
+        ])
 
       assert render_upload(upload, "myfile.jpeg", 100) =~ "100%"
-      assert has_element?(view, "[data-role=image-loaded][data-id=#{hd(upload.entries)["ref"]}]", "100")
+
+      assert has_element?(
+               view,
+               "[data-role=image-loaded][data-id=#{hd(upload.entries)["ref"]}]",
+               "100"
+             )
+
       #
       ref = "[data-role=cancel][data-id=#{hd(upload.entries)["ref"]}"
       assert has_element?(view, ref)
