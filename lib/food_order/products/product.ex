@@ -1,6 +1,8 @@
 defmodule FoodOrder.Products.Product do
   use Ecto.Schema
   import Ecto.Changeset
+  import Waffle.Ecto.Schema
+  alias FoodOrder.Products.ProductImage
 
   @primary_key {:id, :binary_id, autogenerate: true}
   # @foreign_key :binary_id
@@ -13,6 +15,7 @@ defmodule FoodOrder.Products.Product do
     field :price, Money.Ecto.Amount.Type
     field :size, :string
     field :description, :string
+    field :product_url, ProductImage.Type
     timestamps()
   end
 
@@ -24,6 +27,7 @@ defmodule FoodOrder.Products.Product do
     product
     |> cast(attrs, @fields ++ @required_fields)
     |> validate_required(@required_fields)
+    |> cast_attachments(attrs, [:product_url])
     |> unique_constraint([:name], name: :products_name_index)
   end
 end

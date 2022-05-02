@@ -5,6 +5,7 @@
                 <thead>
                     <tr
                         class="text-md font-semibold tracking-wide -text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                        <th class="px-4 py-3" data-id="head-name">Image</th>
                         <th class="px-4 py-3" data-id="head-name">Name</th>
                         <th class="px-4 py-3" data-id="head-price">Price</th>
                         <th class="px-4 py-3" data-id="head-size">Size</th>
@@ -18,6 +19,10 @@
                 <tbody class="bg-white" data-role="product-list">
                     <%= for product <- @products do %>
                         <tr class="text-gray-700" data-role="product-item" data-id={product.id}>
+                            <td class="px-4 py-3 border" data-role="product-image" data-id={product.id}>
+                                <img src={Products.get_image(product)} alt={product.name}>
+                            </td>
+
                             <td class="px-4 py-3 border" data-role="product-name" data-id={product.id}>
                                 <%= product.name %>
                             </td>
