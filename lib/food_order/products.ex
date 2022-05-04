@@ -28,6 +28,10 @@ defmodule FoodOrder.Products do
   def change_product(product, params \\ %{}), do: Product.changeset(product, params)
 
   def get_image(product) do
-    ProductImage.url({product.product_url, product})
+    [_, url] =
+      ProductImage.url({product.product_url, product})
+      |> String.split("/priv/static")
+
+    url
   end
 end
