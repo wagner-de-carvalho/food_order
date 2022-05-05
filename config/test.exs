@@ -31,3 +31,7 @@ config :logger, level: :warn
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# Waffle, Image upload
+config :waffle,
+  storage: Waffle.Storage.Local
