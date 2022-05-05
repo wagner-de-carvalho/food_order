@@ -60,14 +60,13 @@ defmodule FoodOrder.ProductsTest do
     end
 
     test "When all params are correct, creates a new product with image and get image url" do
-      file_upload =
-      %Plug.Upload{
+      file_upload = %Plug.Upload{
         content_type: "image/png",
         filename: "photo.png",
         path: "test/support/fixtures/photo.png"
       }
-      payload =
-      %{
+
+      payload = %{
         name: "Computador",
         price: 2890,
         size: "medium",
@@ -76,19 +75,18 @@ defmodule FoodOrder.ProductsTest do
       }
 
       assert {:ok, %Product{} = product} = Products.create_product(payload)
-      [url |_] = Products.get_image(product)
+      [url | _] = Products.get_image(product)
       assert String.contains?(url, file_upload.filename)
     end
 
     test "create product with invalid image type" do
-      file_upload =
-      %Plug.Upload{
+      file_upload = %Plug.Upload{
         content_type: "image/svg",
         filename: "photo.svg",
         path: "test/support/fixtures/photo.svg"
       }
-      payload =
-      %{
+
+      payload = %{
         name: "Computador",
         price: 2890,
         size: "medium",

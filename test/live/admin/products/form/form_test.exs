@@ -78,6 +78,34 @@ defmodule FoodOrderWeb.Admin.Products.FormTest do
       assert html =~ "pumpkin"
     end
 
+    test "When form is submitted, creates product with image", %{conn: conn} do
+      {:ok, view, _html} = live(conn, Routes.admin_product_path(conn, :index))
+      open_modal(view)
+
+      upload =
+        file_input(view, "#new", :photo, [
+          %{
+            last_modiefied: 1_594_171_879_000,
+            name: "myfile.jpeg",
+            content: "       ",
+            type: "image/jpeg"
+          }
+        ])
+
+      assert render_upload(upload, "myfile.jpeg", 100) =~ "100%"
+
+      payload = %{name: "pumpkin", description: "new product", price: 12, size: "small"}
+
+      {:ok, _, html} =
+        view
+        |> form("#new", product: payload)
+        |> render_submit()
+        |> follow_redirect(conn, Routes.admin_product_path(conn, :index))
+
+      assert html =~ "Product has been created"
+      assert html =~ "pumpkin"
+    end
+
     test "When form data are wrong, returns an error message", %{conn: conn} do
       {:ok, view, _html} = live(conn, Routes.admin_product_path(conn, :index))
       open_modal(view)
