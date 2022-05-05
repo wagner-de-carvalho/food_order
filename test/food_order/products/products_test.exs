@@ -42,7 +42,7 @@ defmodule FoodOrder.ProductsTest do
   end
 
   describe "create_product/1" do
-    test "When all params arecorrect, creates a new product" do
+    test "When all params are correct, creates a new product" do
       payload = %{
         name: "Computador",
         price: 2890,
@@ -56,6 +56,46 @@ defmodule FoodOrder.ProductsTest do
       # assert product.price == payload.price
       assert product.price == %Money{amount: 2890, currency: :BRL}
       assert product.size == payload.size
+      assert "" == Products.get_image(product)
+    end
+
+    test "When all params are correct, creates a new product with image and get image url" do
+      file_upload = %Plug.Upload{
+        content_type: "image/png",
+        filename: "photo.png",
+        path: "test/support/fixtures/photo.png"
+      }
+
+      payload = %{
+        name: "Computador",
+        price: 2890,
+        size: "medium",
+        description: "Computador HP",
+        product_url: file_upload
+      }
+
+      assert {:ok, %Product{} = product} = Products.create_product(payload)
+      [url | _] = Products.get_image(product)
+      assert String.contains?(url, file_upload.filename)
+    end
+
+    test "create product with invalid image type" do
+      file_upload = %Plug.Upload{
+        content_type: "image/svg",
+        filename: "photo.svg",
+        path: "test/support/fixtures/photo.svg"
+      }
+
+      payload = %{
+        name: "Computador",
+        price: 2890,
+        size: "medium",
+        description: "Computador HP",
+        product_url: file_upload
+      }
+
+      assert {:error, changeset} = Products.create_product(payload)
+      assert "file type is invalid" in errors_on(changeset).product_url
     end
 
     test "When any params is incorrect or missing, returns an error" do
