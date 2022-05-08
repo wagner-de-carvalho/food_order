@@ -66,7 +66,8 @@ defmodule FoodOrder.MixProject do
       {:faker, "~> 0.17", only: [:dev, :test]},
       {:money, "~> 1.9"},
       {:waffle, "~> 1.1"},
-      {:waffle_ecto, "~> 0.0.9"}
+      {:waffle_ecto, "~> 0.0.9"},
+      {:waffle_gcs, "~> 0.1"}
     ]
   end
 
