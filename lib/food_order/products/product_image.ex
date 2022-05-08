@@ -15,6 +15,6 @@ defmodule FoodOrder.Products.ProductImage do
   end
 
   def storage_dir(_file_type, {_file, product}) do
-    "/priv/static/uploads/products/#{product.name}"
+    "products/#{product.name}"
   end
 end

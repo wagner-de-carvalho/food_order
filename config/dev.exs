@@ -83,4 +83,14 @@ config :phoenix, :plug_init_mode, :runtime
 
 # Waffle, Image upload
 config :waffle,
-  storage: Waffle.Storage.Local
+  storage: Waffle.Storage.Local,
+  storage_dir: "/priv/static/uploads/"
+
+# Waffle GCS (Google cloud, aws, etc...)
+# config :waffle,
+#   storage: Waffle.Storage.Google.CloudStorage,
+#   bucket: "elxpro-food-order-web-app"
+
+# goth (Google auth)
+# config :goth,
+#   json: File.read!("gcp.json")
