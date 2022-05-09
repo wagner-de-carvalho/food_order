@@ -3,8 +3,8 @@
     <h1 class="text-xl font-bold mb-8" data-role="items-info" data-id="all-foods">All Foods</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 col-gap-12 row-gap-16">
         <!--start for-->
-        <%= for i <- 0..10 do %> 
-            <.live_component module={Item} id={"item-" <> Integer.to_string(i)} />
+        <%= for product <- @products do %> 
+            <.live_component module={Item} id={"item-" <> product.id} product={product} />
         <% end %>
         <!--end for-->
     </div>
