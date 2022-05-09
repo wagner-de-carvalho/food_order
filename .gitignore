@@ -35,3 +35,6 @@ npm-debug.log
 # Images uploads
 /priv/static/uploads
 
+# config file
+gcp.json
+
