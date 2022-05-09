@@ -35,3 +35,7 @@ config :phoenix, :plug_init_mode, :runtime
 # Waffle, Image upload
 config :waffle,
   storage: Waffle.Storage.Local
+
+# goth (Google auth)
+config :goth,
+  json: File.read!("gcp.json")
