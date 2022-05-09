@@ -29,11 +29,20 @@ defmodule FoodOrder.Products do
 
   def get_image(product) do
     {product.product_url, product}
-    |> ProductImage.url()
+    |> ProductImage.url(:final, signed: true)
     |> get_image_url()
   end
 
   defp get_image_url(nil), do: ""
 
-  defp get_image_url(url), do: url
+  defp get_image_url(url) do
+    case Mix.env() do
+      :prod ->
+        url
+
+      _ ->
+        [_ | url] = String.split(url, "/priv/static")
+        url
+    end
+  end
 end

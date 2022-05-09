@@ -15,6 +15,10 @@ defmodule FoodOrder.Products.ProductImage do
   end
 
   def storage_dir(_file_type, {_file, product}) do
-    "products/#{product.name}"
+    if Mix.env() == :prod do
+      "products/#{product.name}"
+    else
+      "priv/static/uploads/products/#{product.name}"
+    end
   end
 end
