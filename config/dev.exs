@@ -92,5 +92,5 @@ config :waffle,
 #   bucket: "elxpro-food-order-web-app"
 
 # goth (Google auth)
-# config :goth,
-#   json: File.read!("gcp.json")
+config :goth,
+  json: File.read!("gcp.json")
