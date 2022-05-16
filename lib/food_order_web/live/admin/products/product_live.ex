@@ -4,6 +4,7 @@ defmodule FoodOrderWeb.Admin.ProductLive do
   alias FoodOrder.Products.Product
   alias FoodOrderWeb.Admin.Product.FilterByName
   alias FoodOrderWeb.Admin.Product.ProductRow
+  alias FoodOrderWeb.Admin.Product.Sort
   alias FoodOrderWeb.Admin.Products.Form
 
   @impl true
