@@ -16,6 +16,7 @@ defmodule FoodOrderWeb.Admin.ProductLive do
     live_action = socket.assigns.live_action
     products = Products.list_products()
     assigns = [products: products, name: "", loading: false]
+
     socket =
       socket
       |> apply_action(live_action, params)
@@ -76,6 +77,7 @@ defmodule FoodOrderWeb.Admin.ProductLive do
 
   defp return_filter_response([], socket, name) do
     assigns = [loading: false, products: []]
+
     socket
     |> put_flash(:info, "There is no product with \"#{name}\" name")
     |> assign(assigns)
