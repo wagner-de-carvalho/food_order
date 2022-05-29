@@ -88,6 +88,7 @@ defmodule FoodOrderWeb.Admin.ProductLive do
   defp return_filter_response([], socket, params) do
     assigns = [loading: false, products: [], name: params[:name], options: params[:sort]]
     name = params[:name]
+
     socket
     |> put_flash(:info, "There is no product with \"#{name}\" name")
     |> assign(assigns)
