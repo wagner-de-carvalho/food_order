@@ -48,8 +48,9 @@ defmodule FoodOrderWeb.Admin.ProductLive do
 
   @impl true
   def handle_info({:list_products, name}, socket) do
-    :timer.sleep(1_000)
-    {:noreply, perform_filter(socket, name)}
+    sort = socket.assigns.options
+    params = [name: name, sort: sort]
+    {:noreply, perform_filter(socket, params)}
   end
 
   defp apply_action(socket, :new, _params) do
@@ -78,21 +79,21 @@ defmodule FoodOrderWeb.Admin.ProductLive do
     assign(socket, assigns)
   end
 
-  defp perform_filter(socket, name) do
-    name
+  defp perform_filter(socket, params) do
+    params
     |> Products.list_products()
-    |> return_filter_response(socket, name)
+    |> return_filter_response(socket, params)
   end
 
-  defp return_filter_response([], socket, name) do
-    assigns = [loading: false, products: []]
-
+  defp return_filter_response([], socket, params) do
+    assigns = [loading: false, products: [], name: params[:name], options: params[:sort]]
+    name = params[:name]
     socket
     |> put_flash(:info, "There is no product with \"#{name}\" name")
     |> assign(assigns)
   end
 
-  defp return_filter_response(products, socket, _name) do
+  defp return_filter_response(products, socket, _params) do
     assigns = [loading: false, products: products]
     socket = clear_flash(socket, :info)
     assign(socket, assigns)
