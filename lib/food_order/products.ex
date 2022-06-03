@@ -6,6 +6,7 @@ defmodule FoodOrder.Products do
 
   def list_suggest_names(name) do
     name = "%" <> name <> "%"
+
     Product
     |> where([p], ilike(p.name, ^name))
     |> select([p], p.name)

@@ -52,8 +52,6 @@ defmodule FoodOrderWeb.Admin.ProductLive do
     {:noreply, assign(socket, names: names)}
   end
 
-
-
   @impl true
   def handle_info({:list_products, name}, socket) do
     sort = socket.assigns.options
