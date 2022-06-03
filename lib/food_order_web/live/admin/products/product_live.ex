@@ -21,7 +21,7 @@ defmodule FoodOrderWeb.Admin.ProductLive do
 
     live_action = socket.assigns.live_action
     products = Products.list_products(name: name, sort: sort)
-    assigns = [products: products, name: "", loading: false]
+    assigns = [products: products, name: "", loading: false, names: []]
 
     options = sort
 
@@ -44,6 +44,12 @@ defmodule FoodOrderWeb.Admin.ProductLive do
   def handle_event("delete", %{"id" => id}, socket) do
     {:ok, _} = Products.delete(id)
     {:noreply, assign(socket, :products, Products.list_products())}
+  end
+
+  @impl true
+  def handle_event("suggest", %{"name" => name}, socket) do
+    names = Products.list_suggest_names(name)
+    {:noreply, assign(socket, names: names)}
   end
 
   @impl true
