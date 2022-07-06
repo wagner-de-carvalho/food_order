@@ -2,11 +2,8 @@ defmodule FoodOrderWeb.Admin.ProductLive do
   use FoodOrderWeb, :live_view
   alias FoodOrder.Products
   alias FoodOrder.Products.Product
-  alias FoodOrderWeb.Admin.Product.FilterByName
-  alias FoodOrderWeb.Admin.Product.Paginate
-  alias FoodOrderWeb.Admin.Product.ProductRow
-  alias FoodOrderWeb.Admin.Product.Sort
-  alias FoodOrderWeb.Admin.Products.Form
+  alias FoodOrderWeb.Admin.Product.{FilterByName, Paginate, ProductRow, Sort}
+  alias FoodOrderWeb.Admin.Products.{Form, SelectPerPage}
 
   @impl true
   def mount(_p, _session, socket) do
