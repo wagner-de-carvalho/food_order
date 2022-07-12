@@ -15,7 +15,7 @@ defmodule FoodOrder.Products do
 
   def list_products(params \\ []) when is_list(params), do: sort_by_params(params)
 
-  def sort_by_params(params) do
+  defp sort_by_params(params) do
     query = from(p in Product)
 
     params

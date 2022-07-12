@@ -15,7 +15,7 @@ defmodule FoodOrderWeb.Main.Items do
   defp assign_products(socket) do
     page = socket.assigns.page
     per_page = socket.assigns.per_page
-    paginate = [{:paginate, %{page: page, per_pag: per_page}}]
+    paginate = [{:paginate, %{page: page, per_page: per_page}}]
     products = Products.list_products(paginate)
     assign(socket, products: products)
   end
