@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "JakeBecker.elixir-ls"
+        "jakebecker.elixir-ls",
+        "carbonid1.emmet-jss"
     ]
 }
