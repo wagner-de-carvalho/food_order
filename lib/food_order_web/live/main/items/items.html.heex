@@ -9,6 +9,6 @@
             <!--end for-->
         </div>
     </section>
-    <a href="#" phx-click="load-more" phx-target={@myself}>Load more</a>
+    <div id="products-loading" data-page-number={@page} phx-hook="ScrollProducts" phx-target={@myself} />
 </div>
 

@@ -21,8 +21,10 @@ defmodule FoodOrderWeb.Main.Items do
     assign(socket, products: products)
   end
 
-  def handle_event("load-more", _, socket) do
-    socket = socket |> update(:page, &(&1 + 1)) |> assign_products()
+  def handle_event("load-more", _params, socket) do
+    socket = socket
+    |> update(:page, &(&1 + 1))
+    |> assign_products()
     {:noreply, socket}
   end
 end
