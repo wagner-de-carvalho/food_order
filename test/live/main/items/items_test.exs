@@ -13,8 +13,6 @@ defmodule FoodOrderWeb.Main.ItemsTest do
     products = for _ <- 0..12, do: insert(:product)
     {:ok, view, _html} = live(conn, Routes.main_path(conn, :index))
 
-    open_browser(view)
-
     [products_page_1, products_page_2] =
       products
       |> Enum.chunk_every(8)
