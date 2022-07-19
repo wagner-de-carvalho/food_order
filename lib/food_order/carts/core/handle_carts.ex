@@ -31,7 +31,10 @@ defmodule FoodOrder.Carts.Core.HandleCarts do
 
   def remove(cart, item_id) do
     {items, item_removed} = Enum.reduce(cart.items, {[], nil}, &remove_item(&1, &2, item_id))
-    total_price_to_remove_from_item = Money.multiply(item_removed.item.price, item_removed.quantity)
+
+    total_price_to_remove_from_item =
+      Money.multiply(item_removed.item.price, item_removed.quantity)
+
     total_price = Money.subtract(cart.total_price, total_price_to_remove_from_item)
 
     %{
