@@ -37,5 +37,26 @@ defmodule FoodOrder.Carts.Core.HandleCartsTest do
       assert Money.add(product.price, product.price) == cart.total_price
       assert [%{item: product, quantity: 2}] == cart.items
     end
+
+    test "Should remove an item" do
+      product = insert(:product)
+      product2 = insert(:product)
+
+      cart =
+        @start_cart
+        |> add_new_product(product)
+        |> add_new_product(product)
+        |> add_new_product(product2)
+
+      assert 3 == cart.total_quantity
+      assert Money.add(product.price, product.price) |> Money.add(product2.price) == cart.total_price
+      assert [%{item: product, quantity: 2}, %{item: product2, quantity: 1}] == cart.items
+
+      cart = remove(cart, product.id)
+
+      assert 1 == cart.total_quantity
+      assert product2.price == cart.total_price
+      assert [%{item: product2, quantity: 1}] == cart.items
+    end
   end
 end
