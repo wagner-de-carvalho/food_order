@@ -28,4 +28,30 @@ defmodule FoodOrder.Carts.Core.HandleCarts do
       |> Map.values()
     end
   end
+
+  def remove(cart, item_id) do
+    {items, item_removed} = Enum.reduce(cart.items, {[], nil}, &remove_item(&1, &2, item_id))
+
+    total_price_to_remove_from_item =
+      Money.multiply(item_removed.item.price, item_removed.quantity)
+
+    total_price = Money.subtract(cart.total_price, total_price_to_remove_from_item)
+
+    %{
+      cart
+      | items: items,
+        total_quantity: cart.total_quantity - item_removed.quantity,
+        total_price: total_price
+    }
+  end
+
+  defp remove_item(item, acc, item_id) do
+    if item.item.id == item_id do
+      {list, _item_acc} = acc
+      {list, item}
+    else
+      {list, item_acc} = acc
+      {[item] ++ list, item_acc}
+    end
+  end
 end
