@@ -3,7 +3,7 @@ defmodule FoodOrder.Carts.Core.HandleCarts do
 
   def create_carts(id), do: Cart.new(id)
 
-  def add_new_product(cart, item) do
+  def add(cart, item) do
     new_total_price = Money.add(cart.total_price, item.price)
     items = cart.items
     new_items = new_item(items, item)
@@ -53,5 +53,29 @@ defmodule FoodOrder.Carts.Core.HandleCarts do
       {list, item_acc} = acc
       {[item] ++ list, item_acc}
     end
+  end
+
+  def inc(%{items: items} = cart, item_id) do
+    {items_updated, product} =
+      Enum.reduce(items, {[], nil}, fn product_info, acc ->
+        if product_info.item.id == item_id do
+          {list, _product} = acc
+          updated_item = %{product_info | quantity: product_info.quantity + 1}
+          item_update = [updated_item]
+          {list ++ item_update, updated_item}
+        else
+          {list, item_update} = acc
+          {[product_info] ++ list, item_update}
+        end
+      end)
+
+    total_price = Money.add(cart.total_price, product.item.price)
+
+    %{
+      cart
+      | items: items_updated,
+        total_quantity: cart.total_quantity + 1,
+        total_price: total_price
+    }
   end
 end

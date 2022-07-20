@@ -18,7 +18,7 @@ defmodule FoodOrder.Carts.Core.HandleCartsTest do
 
     test "Should add a new item in the cart" do
       product = insert(:product)
-      cart = add_new_product(@start_cart, product)
+      cart = add(@start_cart, product)
 
       assert 1 == cart.total_quantity
       # assert [product] == cart.items
@@ -30,8 +30,8 @@ defmodule FoodOrder.Carts.Core.HandleCartsTest do
 
       cart =
         @start_cart
-        |> add_new_product(product)
-        |> add_new_product(product)
+        |> add(product)
+        |> add(product)
 
       assert 2 == cart.total_quantity
       assert Money.add(product.price, product.price) == cart.total_price
@@ -44,9 +44,9 @@ defmodule FoodOrder.Carts.Core.HandleCartsTest do
 
       cart =
         @start_cart
-        |> add_new_product(product)
-        |> add_new_product(product)
-        |> add_new_product(product2)
+        |> add(product)
+        |> add(product)
+        |> add(product2)
 
       assert 3 == cart.total_quantity
 
@@ -60,6 +60,21 @@ defmodule FoodOrder.Carts.Core.HandleCartsTest do
       assert 1 == cart.total_quantity
       assert product2.price == cart.total_price
       assert [%{item: product2, quantity: 1}] == cart.items
+    end
+
+    test "Should increment the same element in the cart" do
+      product = insert(:product)
+
+      cart =
+        @start_cart
+        |> add(product)
+        |> add(product)
+        |> inc(product.id)
+
+      assert 3 == cart.total_quantity
+
+      assert product.price |> Money.add(product.price) |> Money.add(product.price) ==
+               cart.total_price
     end
   end
 end
