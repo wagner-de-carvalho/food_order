@@ -76,5 +76,50 @@ defmodule FoodOrder.Carts.Core.HandleCartsTest do
       assert product.price |> Money.add(product.price) |> Money.add(product.price) ==
                cart.total_price
     end
+
+    test "Should decrement the same element in the cart" do
+      product = insert(:product)
+
+      cart =
+        @start_cart
+        |> add(product)
+        |> add(product)
+        |> dec(product.id)
+
+      assert 1 == cart.total_quantity
+
+      assert product.price |> Money.add(product.price) |> Money.subtract(product.price) ==
+               cart.total_price
+    end
+
+    test "Should decrement remove the product" do
+      product = insert(:product)
+
+      cart =
+        @start_cart
+        |> add(product)
+        |> add(product)
+        |> dec(product.id)
+        |> dec(product.id)
+
+      assert 0 == cart.total_quantity
+
+      assert [] == cart.items
+
+      assert Money.new(0) == cart.total_price
+    end
+
+    test "Should add two different items in the same cart" do
+      product = insert(:product)
+      product2 = insert(:product)
+
+      cart =
+        @start_cart
+        |> add(product)
+        |> add(product2)
+
+      assert 2 == cart.total_quantity
+      assert Money.add(product.price, product2.price) == cart.total_price
+    end
   end
 end
