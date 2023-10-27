@@ -16,3 +16,12 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+### Application Flow
+mix.exs -> Application -> process (Phoenix) -> endpoint
+- endpoint -> config -> router
+- router -> rest-method/live, path, Module, function
+- options - Controllers, LivePages
+
+Controllers -> layout -> root.html -> page_html -> load html page
+Live -> layout -> root -> app -> live.html
