@@ -2,9 +2,11 @@
     "skip_files": [
         "lib/food_order/application.ex",
         "lib/food_order_web.ex",
+        "lib/food_order_web/telemetry.ex",
+        "lib/food_order_web/router.ex",
+        "lib/food_order_web/components/core_components.ex",
         "lib/food_order_web/views/error_helpers.ex",
-        "test/support/*",
-        "lib/food_order_web/telemetry.ex"
+        "test/support/*"
     ],
     "coverage_options": {
         "treat_no_relevant_lines_as_covered": true,
