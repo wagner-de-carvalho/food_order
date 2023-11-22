@@ -12,7 +12,7 @@ defmodule FoodOrder.ProductsFixtures do
     attrs
     |> Enum.into(%{
       description: "Some description",
-      name: "Food #{:rand.uniform(10_000)}",
+      name: "Food",
       price: :rand.uniform(10_000),
       size: :SMALL,
       image_url: "product_#{Enum.random(1..4)}.jpeg"
