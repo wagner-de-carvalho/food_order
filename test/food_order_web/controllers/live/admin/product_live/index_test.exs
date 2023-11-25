@@ -21,6 +21,10 @@ defmodule FoodOrderWeb.Live.Admin.ProductLive.IndexTest do
 
       assert_patch(view, ~p"/admin/products/new")
       assert view |> has_element?("#new-product-modal")
+
+      assert view
+             |> form("#product-form", product: %{})
+             |> render_change() =~ "be blank"
     end
   end
 
