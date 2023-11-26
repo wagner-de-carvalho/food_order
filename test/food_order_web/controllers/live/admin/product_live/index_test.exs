@@ -25,6 +25,17 @@ defmodule FoodOrderWeb.Live.Admin.ProductLive.IndexTest do
       assert view
              |> form("#product-form", product: %{})
              |> render_change() =~ "be blank"
+
+      {:ok, _view, html} =
+        view
+        |> form("#product-form",
+          product: %{name: "Burger", description: "Smash Burger", price: 25.50}
+        )
+        |> render_submit()
+        |> follow_redirect(conn, ~p"/admin/products")
+
+      assert html =~ "created successfully"
+      assert html =~ "Burger"
     end
   end
 

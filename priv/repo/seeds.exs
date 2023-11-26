@@ -1,6 +1,6 @@
 alias FoodOrder.Products
 
-for _ <- 0..100,
+for _ <- 0..30,
     do:
       Products.create_product(%{
         description: "Some description",
