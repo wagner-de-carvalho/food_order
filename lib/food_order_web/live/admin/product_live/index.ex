@@ -9,8 +9,8 @@ defmodule FoodOrderWeb.Admin.ProductLive.Index do
     {:ok, assign(socket, products: products)}
   end
 
-  def handle_params(_, _, socket) do
-    {:noreply, apply_action(socket, socket.assigns.live_action)}
+  def handle_params(params, _, socket) do
+    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
   def handle_event("delete", %{"id" => id}, socket) do
@@ -21,11 +21,19 @@ defmodule FoodOrderWeb.Admin.ProductLive.Index do
     {:noreply, update(socket, :products, &delete_product.(&1))}
   end
 
-  defp apply_action(socket, :new) do
+  defp apply_action(socket, :edit, %{"id" => id}) do
+    product = Products.get_product!(id)
+
+    socket
+    |> assign(:page_title, "Edit Product")
+    |> assign(:product, product)
+  end
+
+  defp apply_action(socket, :new, _) do
     socket
     |> assign(:page_title, "New Product")
     |> assign(:product, %Product{})
   end
 
-  defp apply_action(socket, :index), do: assign(socket, :page_title, "List Products")
+  defp apply_action(socket, :index, _), do: assign(socket, :page_title, "List Products")
 end

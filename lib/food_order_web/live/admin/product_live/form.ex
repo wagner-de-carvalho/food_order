@@ -1,6 +1,7 @@
 defmodule FoodOrderWeb.Admin.ProductLive.Form do
   use FoodOrderWeb, :live_component
   alias FoodOrder.Products
+  alias FoodOrder.Products.Product
 
   def mount(socket) do
     {:ok, socket}
@@ -24,10 +25,10 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
       >
         <.input field={f[:name]} label="Name" />
         <.input field={f[:description]} type="textarea" label="Description" />
-        <.input field={f[:price]} type="number" label="Price" />
+        <.input field={f[:price]} label="Price" />
 
         <:actions>
-          <.button phx-disable-with="saving ...">Create Product</.button>
+          <.button phx-disable-with="saving ...">Save Product</.button>
         </:actions>
       </.simple_form>
     </div>
@@ -44,13 +45,32 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
   end
 
   def handle_event("save", %{"product" => product_params}, socket) do
+    save(socket, socket.assigns.action, product_params)
+  end
+
+  defp save(socket, :edit, product_params) do
+    socket.assigns.product
+    |> Products.update_product(product_params)
+    |> then(fn {:ok, product} ->
+      perform(socket, product, "Product updated successfully")
+    end)
+  end
+
+  defp save(socket, :new, product_params) do
     product_params
     |> Products.create_product()
+    |> then(fn {:ok, product} ->
+      perform(socket, product, "Product created successfully")
+    end)
+  end
+
+  defp perform(socket, args, message) do
+    args
     |> then(fn
-      {:ok, product} ->
+      %Product{} = product ->
         socket =
           socket
-          |> put_flash(:info, "Product #{product.name} created successfully")
+          |> put_flash(:info, message)
           |> push_navigate(to: socket.assigns.navigate)
 
         {:noreply, socket}
